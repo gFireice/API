@@ -42,7 +42,7 @@ class authController {
           .status(403)
           .json({ error: "User is not allowed to authenticate." });
       }
-      const hashedPassword = await bcrypt.hash(password, 10);
+      // const hashedPassword = await bcrypt.hash(password, 10);
       // Сравнение пароля
       const passwordMatch = bcrypt.compare(hashedPassword, user.Password); // Асинхронное сравнение паролей
 
