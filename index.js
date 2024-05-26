@@ -1,11 +1,10 @@
 const express = require("express");
-//const http = require("http");
+const http = require("http");
+
 const morgan = require("morgan");
 const passport = require("passport");
 const bodyParser = require("body-parser");
 const moment = require("moment-timezone");
-const maxmind = require("maxmind");
-const path = require("path");
 //----------------------------------
 const clientRouter = require("./router/client.router");
 const authRouter = require("./router/auth.router");
@@ -44,7 +43,7 @@ app.use(
 );
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/uploads", express.static("uploads"));
+app.use("/api/uploads", express.static("uploads"));
 app.use("/api/user", clientRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/musician", musicianRouster);

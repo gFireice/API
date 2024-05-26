@@ -27,7 +27,7 @@ class authController {
         .request()
         .input("identifier", sql.NVarChar, identifier)
         .query(
-          "SELECT * FROM Client WHERE Login = @identifier OR Phone = @identifier OR Email = @identifier"
+          "SELECT * FROM Client WHERE LoginC = @identifier OR Phone = @identifier OR Email = @identifier"
         );
 
       if (result.recordset.length === 0) {
@@ -42,9 +42,8 @@ class authController {
           .status(403)
           .json({ error: "User is not allowed to authenticate." });
       }
-      // const hashedPassword = await bcrypt.hash(password, 10);
-      // Сравнение пароля
-      const passwordMatch = bcrypt.compare(hashedPassword, user.Password); // Асинхронное сравнение паролей
+
+      const passwordMatch = bcrypt.compare(password, user.PasswordC);
 
       if (!passwordMatch) {
         return res.status(401).json({ error: "Invalid credentials." });
@@ -64,9 +63,11 @@ class authController {
         token,
         IdUser: user.IDClient,
         IDPosition: user.IDPosition,
+        FirstName: user.FirstName,
+        LastName: user.LastName,
       });
     } catch (error) {
-      console.error("Error during login:", error);
+      console.json({ error: "Error during login:" });
 
       if (error instanceof sql.ConnectionError) {
         return res.status(500).json({ error: "Database connection error." });
