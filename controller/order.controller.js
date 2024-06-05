@@ -4,6 +4,21 @@ const sql = require("mssql");
 const connect = require("../db");
 
 class OrderController {
+  // async getOrder(req, res) {
+  //   try {
+  //     const pool = await connect();
+  //     const result = await pool
+  //       .request()
+  //       .query(
+  //         "select [Order].IDOrder, DateOrder,IDClient ,Ticket.IDConcert from [Order] left join TicketOrd on TicketOrd.IDOrder = [Order].IDOrder left join Ticket on TicketOrd.IDTicket = Ticket.IDTicket"
+  //       );
+  //     res.json(result.recordset);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //     res.status(500).json("Server error");
+  //   }
+  // }
+
   async getOrder(req, res) {
     try {
       const pool = await connect();
@@ -48,13 +63,13 @@ class OrderController {
       !Array.isArray(tickets) ||
       tickets.length === 0
     ) {
-      return res.status(400).json({ error: "Missing required fields." });
+      return res.status(400).json({ error: "Отсутствуют необходимые поля." });
     }
 
     try {
-      const pool = await connect();
-
+      const pool = await connect(); // Assuming connect() is a function that establishes the database connection
       const orderRequest = await pool.request();
+
       const orderResult = await orderRequest
         .input("IDClient", sql.Int, IDClient)
         .query(
@@ -77,12 +92,12 @@ class OrderController {
       }
 
       res.status(201).json({
-        message: "Order and tickets created successfully.",
+        message: "Заказ и билеты успешно созданы.",
         orderId: newOrderId,
       });
     } catch (error) {
-      console.error("Error creating order:", error);
-      res.status(500).json({ error: "Server error" });
+      console.error("Ошибка при создании заказа:", error);
+      res.status(500).json({ error: "Ошибка сервера" });
     }
   }
 }

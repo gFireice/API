@@ -22,7 +22,6 @@ require("./middleware/passport")(passport);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// app.use(require("morgan")("dev"));
 const moscowTimezone = "Europe/Moscow";
 
 // Middleware for logging
@@ -42,6 +41,14 @@ app.use(
   })
 );
 
+// Middleware to log request body for POST requests
+app.use((req, res, next) => {
+  if (req.method === "POST") {
+    console.log("POST request body:", req.body);
+  }
+  next();
+});
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/uploads", express.static("uploads"));
 app.use("/api/user", clientRouter);
@@ -53,7 +60,7 @@ app.use("/api/place", placeRouster);
 app.use("/api/order", orderRouster);
 
 const PORT = process.env.PORT || 8085;
-const HOST = process.env.HOST || ["95.165.143.19"];
+const HOST = process.env.HOST || ["95.165.143.19", "0.0.0.0"];
 
 app.listen(PORT, HOST, () => {
   console.log(`Server is running on port ${PORT} and on host ${HOST}.`);
