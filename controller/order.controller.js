@@ -35,19 +35,19 @@ class OrderController {
   }
 
   async getOneOrder(req, res) {
-    const OrderId = req.params.id;
+    const CLientID = req.params.id;
     try {
       const pool = await connect();
       const result = await pool
         .request()
-        .input("OrderId", sql.Int, OrderId)
+        .input("CLientID", sql.Int, CLientID)
         .query(
-          "select [Order].IDOrder, DateOrder,IDClient ,Ticket.IDConcert from [Order] left join TicketOrd on TicketOrd.IDOrder = [Order].IDOrder left join Ticket on TicketOrd.IDTicket = Ticket.IDTicket WHERE [Order].IDOrder = @OrderId"
+          "select Concert.*, ord.DateOrder, TicketOrd.Quantity from Concert left join Ticket on Ticket.IDConcert =Concert.IDConcert Left join TicketOrd on TicketOrd.IDTicket = Ticket.IDTicket left join [Order] ord On ord.IDOrder = TicketOrd.IDOrder WHERE ord.IDClient=@CLientID"
         );
       if (result.recordset.length === 0) {
         return res.status(404).json({ error: "Order not found." });
       }
-      res.json(result.recordset[0]);
+      res.json(result.recordset);
     } catch (error) {
       console.error("Error fetching Order data:", error);
       res.status(500).json("Server error");

@@ -65,6 +65,9 @@ class authController {
         IDPosition: user.IDPosition,
         FirstName: user.FirstName,
         LastName: user.LastName,
+        Phone: user.Phone,
+        Email: user.Email,
+        Birthday: user.Birthday,
       });
     } catch (error) {
       console.json({ error: "Error during login:" });
