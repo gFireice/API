@@ -19,8 +19,8 @@ const app = express();
 app.use(passport.initialize());
 require("./middleware/passport")(passport);
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
+app.use(bodyParser.json({ limit: "50mb" }));
 
 const moscowTimezone = "Europe/Moscow";
 
@@ -60,7 +60,7 @@ app.use("/api/place", placeRouster);
 app.use("/api/order", orderRouster);
 
 const PORT = process.env.PORT || 8085;
-const HOST = process.env.HOST || ["95.165.143.19", "0.0.0.0"];
+const HOST = process.env.HOST || "localhost";
 
 app.listen(PORT, HOST, () => {
   console.log(`Server is running on port ${PORT} and on host ${HOST}.`);

@@ -5,5 +5,7 @@ const ConcertController = require("../controller/concert.controller");
 
 router.get("/", ConcertController.getConcert);
 router.get("/:id", ConcertController.getOneConcert);
+router.post("/", ConcertController.addConcert);
+router.put("/:id", ConcertController.updateConcert);
 
 module.exports = router;

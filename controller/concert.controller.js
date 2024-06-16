@@ -46,7 +46,6 @@ class ConcertController {
       IDPlace,
       IDOrganization,
     } = req.body;
-
     try {
       const pool = await connect();
       const result = await pool
@@ -85,7 +84,6 @@ class ConcertController {
       IDPlace,
       IDOrganization,
     } = req.body;
-
     try {
       const pool = await connect();
       const result = await pool
