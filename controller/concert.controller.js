@@ -54,14 +54,13 @@ class ConcertController {
         .input("StartDate", sql.DateTime, StartDate)
         .input("DurationInHours", sql.Decimal(10, 2), DurationInHours)
         .input("Description", sql.NVarChar(500), Description)
-        .input("Poster", sql.NVarChar(sql.MAX), Poster)
         .input("Price", sql.Decimal(10, 2), Price)
         .input("InStock", sql.Int, InStock)
         .input("IDStyleOfMusic", sql.Int, IDStyleOfMusic)
         .input("IDPlace", sql.Int, IDPlace)
         .input("IDOrganization", sql.Int, IDOrganization).query(`
           INSERT INTO Concert (TitleConcert, StartDate, DurationInHours, Description, Poster, Price, InStock, IDStyleOfMusic, IDPlace, IDOrganization)
-          VALUES (@TitleConcert, @StartDate, @DurationInHours, @Description, @Poster, @Price, @InStock, @IDStyleOfMusic, @IDPlace, @IDOrganization)
+          VALUES (@TitleConcert, @StartDate, @DurationInHours, @Description, 'noimage.jpg', @Price, @InStock, @IDStyleOfMusic, @IDPlace, @IDOrganization)
         `);
       res.status(201).json({ message: "Concert added successfully." });
     } catch (error) {

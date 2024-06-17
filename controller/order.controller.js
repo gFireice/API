@@ -55,6 +55,10 @@ class OrderController {
   }
 
   async createOrder(req, res) {
+    console.log(
+      "Получен запрос на создание заказа. Переданные данные:",
+      req.body
+    );
     const { IDClient, tickets } = req.body;
 
     if (
