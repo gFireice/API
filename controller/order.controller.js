@@ -55,10 +55,10 @@ class OrderController {
   }
 
   async createOrder(req, res) {
-    console.log(
-      "Получен запрос на создание заказа. Переданные данные:",
-      req.body
-    );
+    // console.log(
+    //   "Получен запрос на создание заказа. Переданные данные:",
+    //   req.body
+    // );
     const { IDClient, tickets } = req.body;
 
     if (
@@ -71,7 +71,7 @@ class OrderController {
     }
 
     try {
-      const pool = await connect(); // Assuming connect() is a function that establishes the database connection
+      const pool = await connect();
       const orderRequest = await pool.request();
 
       const orderResult = await orderRequest

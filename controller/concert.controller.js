@@ -120,6 +120,23 @@ class ConcertController {
       res.status(500).json("Server error");
     }
   }
+  async deleteConcert(req, res) {
+    const ConcertId = req.params.id;
+    try {
+      const pool = await connect();
+      const result = await pool
+        .request()
+        .input("ConcertId", sql.Int, ConcertId)
+        .query("DELETE FROM Concert WHERE IDConcert = @ConcertId");
+      if (result.rowsAffected[0] === 0) {
+        return res.status(404).json({ error: "Concert not found." });
+      }
+      res.json({ message: "Concert deleted successfully." });
+    } catch (error) {
+      console.error("Error deleting concert:", error);
+      res.status(500).json("Server error");
+    }
+  }
 }
 
 module.exports = new ConcertController();
