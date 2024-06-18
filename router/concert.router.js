@@ -7,6 +7,6 @@ router.get("/", ConcertController.getConcert);
 router.get("/:id", ConcertController.getOneConcert);
 router.post("/", ConcertController.addConcert);
 router.put("/:id", ConcertController.updateConcert);
-router.delete("/concerts/:id", ConcertController.deleteConcert);
+router.delete("/:id", ConcertController.deleteConcert);
 
 module.exports = router;
